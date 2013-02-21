@@ -85,3 +85,6 @@ D:\Program Files Custom\svn\OverSeer\OverSeer\obj\x64\Debug\Timecode.g.cs
 D:\Program Files Custom\backup\svn\OverSeer\OverSeer\bin\x64\Debug\OverSeer.exe.config
 D:\Program Files Custom\backup\svn\OverSeer\OverSeer\obj\x64\Debug\OverSeer.exe
 D:\Program Files Custom\backup\svn\OverSeer\OverSeer\obj\x64\Debug\OverSeer.pdb
+C:\Users\carlilelance\Documents\GitHub\QualityControl\OverSeer\OverSeer\bin\x64\Debug\OverSeer.exe.config
+C:\Users\carlilelance\Documents\GitHub\QualityControl\OverSeer\OverSeer\obj\x64\Debug\OverSeer.exe
+C:\Users\carlilelance\Documents\GitHub\QualityControl\OverSeer\OverSeer\obj\x64\Debug\OverSeer.pdb

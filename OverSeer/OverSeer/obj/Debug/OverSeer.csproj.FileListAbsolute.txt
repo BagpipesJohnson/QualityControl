@@ -1,0 +1,36 @@
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\OverSeer.exe.config
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.csprojResolveAssemblyReference.cache
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\MainWindow.baml
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\MainWindow.g.cs
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\App.g.cs
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer_MarkupCompile.cache
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.g.resources
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.Properties.Resources.resources
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.csproj.GenerateResource.Cache
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\OverSeer.exe
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\OverSeer.pdb
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\Google.GData.Client.dll
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\Google.GData.Extensions.dll
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\Google.GData.Spreadsheets.dll
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.exe
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer.pdb
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\OverSeer.exe.config
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.exe
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.pdb
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.csprojResolveAssemblyReference.cache
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\MainWindow.baml
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\MainWindow.g.cs
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\App.g.cs
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer_MarkupCompile.cache
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.g.resources
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.Properties.Resources.resources
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer.csproj.GenerateResource.Cache
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\OverSeer.exe
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\OverSeer.pdb
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\Google.GData.Client.dll
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\Google.GData.Extensions.dll
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\Google.GData.Spreadsheets.dll
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\bin\Debug\Newtonsoft.Json.dll
+C:\Users\BagpipesJohnson\Desktop\Repository\OverSeer\OverSeer\obj\Debug\OverSeer_Content.g.cs
+D:\Program Files Custom\Adjudicator\OverSeer\OverSeer\obj\Debug\OverSeer_Content.g.cs

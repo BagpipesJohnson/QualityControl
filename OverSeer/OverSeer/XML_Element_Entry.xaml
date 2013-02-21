@@ -1,0 +1,17 @@
+﻿<Window x:Class="OverSeer.XML_Element_Entry"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="XML_Element_Entry" Height="90" Width="400">
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="5,5,5,5">
+                <Label x:Name="Label_element" Width="100" HorizontalContentAlignment="Right">element:</Label>
+                <TextBox x:Name="TextBox_value" Width="281"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="0,0,5,0" HorizontalAlignment="Right">
+                <Button x:Name="Button_cancel" Width="50" Margin="2,0">Cancel</Button>
+                <Button x:Name="Button_submit" Width="50" Margin="2,0">Submit...</Button>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</Window>

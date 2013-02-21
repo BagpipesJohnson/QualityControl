@@ -1,0 +1,28 @@
+﻿<Window x:Class="OverSeer.UserPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="UserPage" Height="466" Width="466">
+    <Grid Margin="0,0,-8,-4">
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="White" Offset="0.371"/>
+                <GradientStop Color="#FF87FF7B" Offset="0.142"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+        <Image x:Name="diva" Margin="54,129,330,229" Source="diva.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="ingest" Margin="182,39,202,319" Source="ingest.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="language" Margin="182,164,197,194" Source="language.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="mam" Margin="313,129,71,229" Source="MAM.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="msw" Margin="54,223,328,135" Source="MSW.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="webdeliverable" Margin="313,223,67,135" Source="web-deliverables.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Image x:Name="oneinch" Margin="182,299,202,59" Source="1inch.JPG" Stretch="Fill" Opacity="0.3"/>
+        <Label x:Name="userLabel" Content="User Name:" HorizontalAlignment="Left" Margin="8,396,0,0" VerticalAlignment="Top" Width="110" FontSize="18"/>
+        <Label Content="Diva" HorizontalAlignment="Left" Margin="75,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="43"/>
+        <Label Content="Ingest" HorizontalAlignment="Left" Margin="202,13,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="44"/>
+        <Label Content="MSW" HorizontalAlignment="Left" Margin="75,305,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="43"/>
+        <Label Content="Language Training" HorizontalAlignment="Left" Margin="164,246,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="120"/>
+        <Label Content="MAM" HorizontalAlignment="Left" Margin="336,103,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="43"/>
+        <Label Content="1-Inch" HorizontalAlignment="Left" Margin="202,381,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="43"/>
+        <Label Content="Web Deliverables" HorizontalAlignment="Left" Margin="309,310,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.447,1" Width="105"/>
+    </Grid>
+</Window>

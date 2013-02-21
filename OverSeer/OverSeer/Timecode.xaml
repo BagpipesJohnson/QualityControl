@@ -1,0 +1,120 @@
+﻿<Window x:Class="OverSeer.Timecode"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Timecode" Height="250" Width="350">
+    <Grid>
+        <GroupBox Header="Timecode">
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_hourTens" HorizontalContentAlignment="Center" TextChanged="TextBox_hourTens_TextChanged">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <ItemsControl x:Name="ItemsControl_hourTens">
+                        <CheckBox>1</CheckBox>
+                        <CheckBox>2</CheckBox>
+                        <CheckBox>3</CheckBox>
+                        <CheckBox>4</CheckBox>
+                        <CheckBox>5</CheckBox>
+                        <CheckBox>6</CheckBox>
+                        <CheckBox>7</CheckBox>
+                        <CheckBox>8</CheckBox>
+                        <CheckBox>9</CheckBox>
+                    </ItemsControl>
+                </StackPanel>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_hour" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <Label>:</Label>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_minuteTens" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_minute" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <Label>:</Label>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_secondTens" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_second"  HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <Label>:</Label>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_framTens" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+                <StackPanel Width="25" Margin="0,0,10,0">
+                    <TextBox x:Name="TextBox_frame" HorizontalContentAlignment="Center">0</TextBox>
+                    <CheckBox Margin="0,5,0,0">0</CheckBox>
+                    <CheckBox>1</CheckBox>
+                    <CheckBox>2</CheckBox>
+                    <CheckBox>3</CheckBox>
+                    <CheckBox>4</CheckBox>
+                    <CheckBox>5</CheckBox>
+                    <CheckBox>6</CheckBox>
+                    <CheckBox>7</CheckBox>
+                    <CheckBox>8</CheckBox>
+                    <CheckBox>9</CheckBox>
+                </StackPanel>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

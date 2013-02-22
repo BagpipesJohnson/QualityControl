@@ -43,14 +43,7 @@ namespace OverSeer
 
             //load projects
             ProjectFolder = currentProjectFolder;
-            try
-            {
-                LoadProjects(ProjectFolder);
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.ToString());
-            }
+            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -209,6 +202,8 @@ namespace OverSeer
 
         private void Button_ProjectManagement_Click(object sender, RoutedEventArgs e)
         {
+            LoadProjects(ProjectFolder);
+
             ProjectManagment projectManager = new ProjectManagment();
             projectManager.Show();
         }
@@ -219,6 +214,7 @@ namespace OverSeer
         /// <param name="projectFolder">folder containing project xmls</param>
         private void LoadProjects(DirectoryInfo projectFolder)
         {
+
             //remove system files and put project files in a list
             List<FileInfo> projectFiles = utility.checkForSystemFiles(projectFolder.GetFiles().ToList<FileInfo>());
 

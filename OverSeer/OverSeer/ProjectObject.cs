@@ -58,23 +58,48 @@ namespace OverSeer
                 }
                 if (element.Name == "Watchfolder")
                 {
-                    Watchfolder = new DirectoryInfo(element.Value);
-                    continue;
+                    if(element.Value=="")
+                    { 
+                        continue; 
+                    }
+                    else
+                    {
+                        Watchfolder = new DirectoryInfo(element.Value);
+                        continue;
+                    }
                 }
                 if (element.Name == "MezzaninePassFolder")
                 {
-                    MezzaninePassFolder = new DirectoryInfo(element.Value);
-                    continue;
+                    if (element.Value == "")
+                    {
+                    }
+                    else
+                    {
+                        MezzaninePassFolder = new DirectoryInfo(element.Value);
+                        continue;
+                    }
                 } 
                 if (element.Name == "WebPassFolder")
                 {
-                    WebPassFolder = new DirectoryInfo(element.Value);
-                    continue;
+                    if (element.Value == "")
+                    {
+                    }
+                    else
+                    {
+                        WebPassFolder = new DirectoryInfo(element.Value);
+                        continue;
+                    }
                 }
                 if (element.Name == "FailFolder")
                 {
-                    FailFolder = new DirectoryInfo(element.Value);
-                    continue;
+                    if (element.Value == "")
+                    {
+                    }
+                    else
+                    {
+                        FailFolder = new DirectoryInfo(element.Value);
+                        continue;
+                    }
                 }
                 if (element.Name == "Keyword")
                 {

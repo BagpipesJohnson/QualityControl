@@ -78,17 +78,47 @@ namespace OverSeer
                 }
                 if (element.Name == "Keyword")
                 {
-                    if(element.Value.Contains(','))
+                    if(element.Value != "")
                     {
-                        //parse the value now
+                        //parse the value
+                        Keywords = element.Value.Split(',').ToList<string>();
                     }
                     else
                     {
                         //traverse the node
+                        foreach (var keyword in element.Elements())
+                        {
+                            Keywords.Add(keyword.Value);
+                        }
+                    }
+                    continue;
+                }
+                if (element.Name == "ToEmailOnFail")
+                {
+                    if (element.Value != "")
+                    {
+                        //parse the value
+                        Keywords = element.Value.Split(',').ToList<string>();
+                    }
+                    else
+                    {
+                        //traverse the node
+                        foreach (var email in element.Elements())
+                        {
+                            Emails.Add(new MailAddress(email.Value));
+                        }
+                    }
+                    continue;
+                }
+                if (element.Name == "KeywordsExclusions")
+                {
+                    foreach (var keyword in element.Elements())
+                    {
+                        KeywordExclusions.Add(keyword.Value);
                     }
                 }
             }
-            return false;
+            return true;
         }
 
         /// <summary>

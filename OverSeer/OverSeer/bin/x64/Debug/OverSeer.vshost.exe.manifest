@@ -91,14 +91,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OverSeer.exe" size="396288">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="OverSeer.exe" size="396800">
       <assemblyIdentity name="OverSeer" version="1.0.0.0" language="neutral" processorArchitecture="amd64" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+<<<<<<< HEAD
         <dsig:DigestValue>j9wx5pai6cA7wrmluspryPX6R9dvo5GUjFQjnNw0HNw=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>L14muh9YpUk/wMWBH3Yhg0mZpwzHoErnRjJ03bGja/Y=</dsig:DigestValue>
+>>>>>>> origin/Lance
       </hash>
     </dependentAssembly>
   </dependency>

@@ -43,7 +43,14 @@ namespace OverSeer
 
             //load projects
             ProjectFolder = currentProjectFolder;
-            LoadProjects(ProjectFolder);
+            try
+            {
+                LoadProjects(ProjectFolder);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.ToString());
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -216,7 +223,7 @@ namespace OverSeer
             List<FileInfo> projectFiles = utility.checkForSystemFiles(projectFolder.GetFiles().ToList<FileInfo>());
 
             //create a project for each project xml and add them to a list of projects
-            foreach (var file in projectFolder.GetFiles())
+            foreach (var file in projectFiles)
             {
                 ProjectObject newProject = new ProjectObject(file);
                 CurrentProjectObjects.Add(newProject);

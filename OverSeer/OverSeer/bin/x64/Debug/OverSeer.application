@@ -14,7 +14,11 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+<<<<<<< HEAD
         <dsig:DigestValue>8lox2ptN6B6KTGanZH1qiBaUyUKI17xREZ88p4s8n3w=</dsig:DigestValue>
+=======
+        <dsig:DigestValue>5mtC9Hl6tJ4gXo06B4QjPBSanQUFc0JglZVNjw1MN58=</dsig:DigestValue>
+>>>>>>> origin/Lance
       </hash>
     </dependentAssembly>
   </dependency>

@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 //added
-using System.Linq;
 using System.Xml.Linq;
 using System.Net.Mail; //used for emails
 using System.IO;

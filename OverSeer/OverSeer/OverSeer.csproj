@@ -133,6 +133,7 @@
     <Compile Include="ProjectManagment.xaml.cs">
       <DependentUpon>ProjectManagment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ProjectObject.cs" />
     <Compile Include="rectifier.cs" />
     <Compile Include="Settings.Designer.cs">
       <AutoGen>True</AutoGen>

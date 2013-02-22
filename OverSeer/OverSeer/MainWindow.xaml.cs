@@ -26,13 +26,24 @@ namespace OverSeer
     public partial class MainWindow : Window
     {
         public List<FileObjects> CurrentFileObjects { get; set; }
+        public List<ProjectObject> CurrentProjectObjects { get; set; }
+        public DirectoryInfo ProjectFolder { get; set; }
 
         public bool keepRunning;
+
+        //private vars
+        private DirectoryInfo currentProjectFolder = new DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\projects");
 
         public MainWindow()
         {
             keepRunning = true;
             InitializeComponent();
+            CurrentFileObjects = new List<FileObjects>();
+            CurrentProjectObjects = new List<ProjectObject>();
+
+            //load projects
+            ProjectFolder = currentProjectFolder;
+            LoadProjects(ProjectFolder);
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -193,6 +204,23 @@ namespace OverSeer
         {
             ProjectManagment projectManager = new ProjectManagment();
             projectManager.Show();
+        }
+
+        /// <summary>
+        /// creates a projectObject for each project xml and adds them to a list of projects
+        /// </summary>
+        /// <param name="projectFolder">folder containing project xmls</param>
+        private void LoadProjects(DirectoryInfo projectFolder)
+        {
+            //remove system files and put project files in a list
+            List<FileInfo> projectFiles = utility.checkForSystemFiles(projectFolder.GetFiles().ToList<FileInfo>());
+
+            //create a project for each project xml and add them to a list of projects
+            foreach (var file in projectFolder.GetFiles())
+            {
+                ProjectObject newProject = new ProjectObject(file);
+                CurrentProjectObjects.Add(newProject);
+            }
         }
     }
 }

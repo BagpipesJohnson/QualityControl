@@ -25,6 +25,9 @@ namespace OverSeer
         public ProjectManagment()
         {
             InitializeComponent();
+
+            //xaml binding
+            ComboBox_projects.DataContext = MainWindow.CurrentProjectObjectsDict.Keys;
         }
 
         private void Button_CreateProject_Click(object sender, RoutedEventArgs e)
@@ -55,7 +58,17 @@ namespace OverSeer
 
         private void ComboBox_projects_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ComboBox_projects.SelectedValue != "")
+            {
+                ProjectObject selectedProject = MainWindow.CurrentProjectObjectsDict[ComboBox_projects.SelectedItem.ToString()];
+                openProject(selectedProject);
+            }
+        }
 
+        private void openProject(ProjectObject project)
+        {
+            ProjectInfoWindow projectInfo = new ProjectInfoWindow(project);
+            projectInfo.ShowDialog();
         }
     }
 }

@@ -26,7 +26,20 @@ namespace OverSeer
         public Adjudicator adjudicator;
         //private XmlTextReader currentXML;
         private string currentProject;
-        
+
+        public ProjectInfoWindow(ProjectObject project)
+        {
+            InitializeComponent();
+
+            this.TextBox_MezzaninePassFolder.Text = project.MezzaninePassFolder.FullName;
+            this.TextBox_SDNumber.Text = project.SDNumber;
+            this.TextBox_WebPassFolder.Text = project.WebPassFolder.FullName;
+            this.TextBox_FailedDirectory.Text = project.FailFolder.FullName;
+            this.TextBox_WatchFolder.Text = project.Watchfolder.FullName;
+            this.TextBox_ProjectName.Text = project.ProjectName;
+            this.TextBox_Keywords.Text = project.Keywords.ToArray<string>().ToString();
+        }
+
         public ProjectInfoWindow(string projectname, 
                                  string webPassDir, 
                                  string mezPasDir, 

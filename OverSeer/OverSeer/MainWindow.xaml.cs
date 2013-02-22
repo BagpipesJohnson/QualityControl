@@ -26,7 +26,8 @@ namespace OverSeer
     public partial class MainWindow : Window
     {
         public List<FileObjects> CurrentFileObjects { get; set; }
-        public List<ProjectObject> CurrentProjectObjects { get; set; }
+        static public List<ProjectObject> CurrentProjectObjects { get; set; }
+        static public Dictionary<string, ProjectObject> CurrentProjectObjectsDict { get; set; }
         public DirectoryInfo ProjectFolder { get; set; }
 
         public bool keepRunning;
@@ -40,10 +41,10 @@ namespace OverSeer
             InitializeComponent();
             CurrentFileObjects = new List<FileObjects>();
             CurrentProjectObjects = new List<ProjectObject>();
+            CurrentProjectObjectsDict = new Dictionary<string, ProjectObject>();
 
             //load projects
             ProjectFolder = currentProjectFolder;
-            
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -202,7 +203,7 @@ namespace OverSeer
 
         private void Button_ProjectManagement_Click(object sender, RoutedEventArgs e)
         {
-            LoadProjects(ProjectFolder);
+            prepProjects();
 
             ProjectManagment projectManager = new ProjectManagment();
             projectManager.Show();
@@ -223,6 +224,22 @@ namespace OverSeer
             {
                 ProjectObject newProject = new ProjectObject(file);
                 CurrentProjectObjects.Add(newProject);
+            }
+        }
+
+        private void prepProjects()
+        {
+            //clear any old project info
+            CurrentProjectObjects.Clear();
+            CurrentProjectObjectsDict.Clear();
+
+            //populate the projects
+            LoadProjects(ProjectFolder);
+
+            //convert to dictionary entries
+            foreach (var project in CurrentProjectObjects)
+            {
+                CurrentProjectObjectsDict.Add(project.ProjectName, project);
             }
         }
     }

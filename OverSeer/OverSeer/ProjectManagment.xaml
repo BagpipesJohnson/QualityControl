@@ -5,7 +5,7 @@
     <Grid>
         <StackPanel>
             <StackPanel Height="200">
-                <ComboBox x:Name="ComboBox_projects" SelectionChanged="ComboBox_projects_SelectionChanged"></ComboBox>
+                <ComboBox x:Name="ComboBox_projects" SelectionChanged="ComboBox_projects_SelectionChanged" ItemsSource="{Binding}"></ComboBox>
             </StackPanel>
             <StackPanel VerticalAlignment="Bottom">
                 <Button x:Name="Button_CreateProject" Click="Button_CreateProject_Click">Create Project...</Button>

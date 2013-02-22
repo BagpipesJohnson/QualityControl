@@ -80,7 +80,7 @@ namespace OverSeer
                 {
                     if(element.Value.Contains(','))
                     {
-                        //parse the value
+                        //parse the value now
                     }
                     else
                     {

@@ -24,17 +24,6 @@ namespace OverSeer
         public List<string> KeywordExclusions { get; set; }
         public List<MailAddress> Emails { get; set; }
 
-        ////private vars
-        //private XElement name = new XElement("Name");
-        //private XElement sd = new XElement("SDNumber");
-        //private XElement watchfolder = new XElement("Watchfolder");
-        //private XElement mezPassFolder = new XElement("MezzaninePassFolder");
-        //private XElement webPassFodler = new XElement("WebPassFolder");
-        //private XElement failFolder = new XElement("FailFolder");
-        //private XElement keywords = new XElement("Keyword");
-        //private XElement failEmails = new XElement("ToEmailOnFail");
-        //private XElement cautionEmails = new XElement("ToEmailOnCaution");
-
         //constructor
         public ProjectObject(FileInfo xml)
         {

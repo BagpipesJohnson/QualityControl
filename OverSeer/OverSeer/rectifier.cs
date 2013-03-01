@@ -92,10 +92,14 @@ namespace OverSeer
                 //check to see if file's xml's exist, if not, warn the user and continue
                 if (!File.Exists(filesXML.FullName))
                 {
-                    System.Windows.MessageBox.Show("The following file: \n" + file + "\n" + "is missing!");
+                    fileObjects.Add(new FileObjects(file));
+                    //System.Windows.MessageBox.Show("The following file: \n" + file + "\n" + "is missing!");
                     continue;
                 }
-                fileObjects.Add(new FileObjects(file, filesXML)); 
+                else
+                {
+                    fileObjects.Add(new FileObjects(file, filesXML));
+                }
             }
 
             return fileObjects;

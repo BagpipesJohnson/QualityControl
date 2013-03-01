@@ -105,8 +105,9 @@ namespace OverSeer
             rectifier r = new rectifier(rectifyWatchFolder);
 
             List<System.IO.FileInfo> filesToRectify = utility.checkForSystemFiles(r.getDirectoryFiles(rectifyWatchFolder));
-
+            
             //r.createXMLs(filesToRectify, xmlDirectory);
+            //FileInfo possibleXML = new FileInfo(System.IO.Path.Combine(xmlDirectory.FullName),
             CurrentFileObjects = r.createFileObjects(filesToRectify, xmlDirectory);
 
         }

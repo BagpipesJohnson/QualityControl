@@ -193,6 +193,9 @@ namespace OverSeer
             videoFileExtensions.Add(".mpg");
         }
 
+        /// <summary>
+        /// sets the default proerty values for this class
+        /// </summary>
         private void setDefaultProperties()
         {
             //set default values
@@ -210,6 +213,9 @@ namespace OverSeer
             this.Project = new ProjectObject(new FileInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\projects\autoCompressed.xml"));
         }
 
+        /// <summary>
+        /// parses the fillname to try a glean out metadata such as bitrate and langauge code
+        /// </summary>
         private void setPropertiesFromFilename()
         {
             //TODO: test for diva name parsing for informaiton, not just web-deliverable

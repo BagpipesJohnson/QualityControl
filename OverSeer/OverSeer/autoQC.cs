@@ -170,9 +170,10 @@ namespace OverSeer
             //find out which fileObjects are in autoQC
             foreach (var file in MainWindow.CurrentFileObjects)
             {
-                if (file.CurrentFileStatus == FileStatus.autoQc)
+                if (file.CurrentFileStatus == FileStatus.qcQueue)
                 {
                     filesToCheck.Add(file);
+                    file.CurrentFileStatus = FileStatus.autoQc;
                 }
             }
 

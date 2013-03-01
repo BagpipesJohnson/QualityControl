@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml;
 namespace OverSeer
 {
+    //TODO: media info each file and compare it to the naming convention.  If it is wrong, or the specs are missing from the file name, rename it correctly
     class rectifier
     {
         //properties
@@ -26,56 +27,56 @@ namespace OverSeer
             return watchFolder.GetFiles().ToList<FileInfo>();
         }
 
-        public void createXMLs(List<FileInfo> files, DirectoryInfo XMLDirectory)
-        {
-            //TODO: get rid of this try catch
-            try
-            {
-                foreach (FileInfo file in files)
-                {
-                    //TODO: linq this
-                    using (XmlWriter writer = XmlWriter.Create(XMLDirectory + file.Name + ".xml"))
-                    {
-                        // Create a new XML
-                        writer.WriteStartDocument();
-                        writer.WriteWhitespace("\r\n");
-                        writer.WriteStartElement("Asset");
-                        writer.WriteWhitespace("\r\n");
+        //public void createXMLs(List<FileInfo> files, DirectoryInfo XMLDirectory)
+        //{
+        //    //TODO: get rid of this try catch
+        //    try
+        //    {
+        //        foreach (FileInfo file in files)
+        //        {
+        //            //TODO: linq this
+        //            using (XmlWriter writer = XmlWriter.Create(XMLDirectory + file.Name + ".xml"))
+        //            {
+        //                // Create a new XML
+        //                writer.WriteStartDocument();
+        //                writer.WriteWhitespace("\r\n");
+        //                writer.WriteStartElement("Asset");
+        //                writer.WriteWhitespace("\r\n");
 
-                        // Populate XML--Element names CANNOT have spaces!
+        //                // Populate XML--Element names CANNOT have spaces!
 
-                        string bitRate = this.getBitRate(file);
-                        writer.WriteElementString("BitRate", bitRate);
-                        writer.WriteWhitespace("\r\n");
+        //                string bitRate = this.getBitRate(file);
+        //                writer.WriteElementString("BitRate", bitRate);
+        //                writer.WriteWhitespace("\r\n");
 
-                        string frameRate = getFrameRate(file);
-                        addElementToXml(writer, "FrameRate", frameRate);
+        //                string frameRate = getFrameRate(file);
+        //                addElementToXml(writer, "FrameRate", frameRate);
 
-                        string ScanType = getScanType(file);
-                        addElementToXml(writer, "ScanType", ScanType);
+        //                string ScanType = getScanType(file);
+        //                addElementToXml(writer, "ScanType", ScanType);
 
-                        string Resolution = getResolution(file);
-                        addElementToXml(writer, "Resolution", Resolution);
+        //                string Resolution = getResolution(file);
+        //                addElementToXml(writer, "Resolution", Resolution);
 
-                        string AspectRatio = getAspectRatio(file);
-                        addElementToXml(writer, "AspectRatio", AspectRatio);
+        //                string AspectRatio = getAspectRatio(file);
+        //                addElementToXml(writer, "AspectRatio", AspectRatio);
 
-                        string Project = getProject(file);
+        //                string Project = getProject(file);
 
-                        addElementToXml(writer, "Project", Project);
+        //                addElementToXml(writer, "Project", Project);
 
-                        writer.WriteEndElement();
-                        writer.WriteWhitespace("\r\n");
-                        writer.WriteEndDocument();
+        //                writer.WriteEndElement();
+        //                writer.WriteWhitespace("\r\n");
+        //                writer.WriteEndDocument();
 
-                    }
-                }
-            }
-            catch (Exception exception)
-            {
-                logger.writeErrorLog("Could not create XML files in rectifier " + DateTime.Now);
-            }
-        }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception exception)
+        //    {
+        //        logger.writeErrorLog("Could not create XML files in rectifier " + DateTime.Now);
+        //    }
+        //}
 
         public List<FileObjects> createFileObjects(List<FileInfo> files, DirectoryInfo xmlDirectory)
         {
@@ -87,7 +88,7 @@ namespace OverSeer
             foreach (var file in files)
             {
                 //gets the files fullname, strips off the extension and adds .xml which should give the files xml
-                filesXML = new FileInfo(file.FullName.Remove(file.FullName.Length,4) + ".xml");
+                filesXML = new FileInfo(System.IO.Path.Combine(xmlDirectory.FullName,file.Name.Replace(file.Extension,".xml")));
                 //check to see if file's xml's exist, if not, warn the user and continue
                 if (!File.Exists(filesXML.FullName))
                 {

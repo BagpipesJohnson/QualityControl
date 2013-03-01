@@ -19,31 +19,36 @@ namespace OverSeer
         /// <param name="file">The complete file name--including the path-- of the file to be moved</param>
         /// <param name="endLocation">The Path to the target directory</param>
         /// <returns>Returns 0 on error, and 1 on a success</returns>
-        static public string moveFile(System.IO.FileInfo file, System.IO.DirectoryInfo endLocation)
+        static public string moveFile(FileObjects file, System.IO.DirectoryInfo endLocation)
         {
             try
             {
                 //check to see if the file is exclusively writable
-                if (!isFileWritable(file))
+                if (!isFileWritable(file.CurrentFileInfo))
                 {
                     throw new IOException("File is not free to move");
                 }
 
+                //check to see if the destination directory exists.  If not, create it.
                 if (!Directory.Exists(endLocation.FullName))
                 {
                     Directory.CreateDirectory(endLocation.FullName);
                 }
-                string shortFileName = file.Name;
+                string shortFileName = file.CurrentFileInfo.Name;
                 string endLocationWithFile = endLocation + shortFileName;
 
+                //handle duplicates
                 if(File.Exists(endLocationWithFile))
                 {
+                //TODO: backup duplicate, move, then delete
                 // Meant to over-ride duplicates to avoid exceptions
                 System.IO.File.Delete(endLocationWithFile);
                 }
 
-                System.IO.File.Move(file.FullName, endLocationWithFile);
-                System.Threading.Thread.Sleep(1000);
+                //Do the heavy moving
+                System.IO.File.Move(file.CurrentFileInfo.FullName, endLocationWithFile);
+                
+                //System.Threading.Thread.Sleep(1000);
                 //FileInfo deliveredFile = new FileInfo(endLocationWithFile);
 
                 //if (Joshua.isFileInDirectory(endLocation, deliveredFile))
@@ -56,11 +61,81 @@ namespace OverSeer
                 {
                     if (temp.Name == shortFileName)
                     {
-                        
-                        return "Passed";
+                        file.UpdateCurrentLocation(new FileInfo(endLocationWithFile));
+                        return "Moved Successfully";
                     }
                 }
                 
+                // The file we sent over has not gotten to the correct directory....something went wrong!
+                throw new IOException("File did not reach destination");
+
+            }
+            catch (Exception e)
+            {
+                if (e.Message.Contains("not free") || e.Message.Contains("being used"))
+                {
+                    logger.writeErrorLog("File was not free to move: " + file.CurrentFileInfo.Name);
+                    return "File not free to move";
+                }
+                //Something went wrong, return a fail;
+                logger.writeErrorLog("File could not be moved:" + file.CurrentFileInfo.Name);
+                return "Did Not Arrive";
+            }
+        }
+
+        /// <summary>
+        /// This moves a specified file to a new location. 
+        /// </summary>
+        /// <param name="file">The complete file name--including the path-- of the file to be moved</param>
+        /// <param name="endLocation">The Path to the target directory</param>
+        /// <returns>Returns 0 on error, and 1 on a success</returns>
+        static public string moveFile(FileInfo file, System.IO.DirectoryInfo endLocation)
+        {
+            try
+            {
+                //check to see if the file is exclusively writable
+                if (!isFileWritable(file))
+                {
+                    throw new IOException("File is not free to move");
+                }
+
+                //check to see if the destination directory exists.  If not, create it.
+                if (!Directory.Exists(endLocation.FullName))
+                {
+                    Directory.CreateDirectory(endLocation.FullName);
+                }
+                string shortFileName = file.Name;
+                string endLocationWithFile = endLocation + shortFileName;
+
+                //handle duplicates
+                if (File.Exists(endLocationWithFile))
+                {
+                    //TODO: backup duplicate, move, then delete
+                    // Meant to over-ride duplicates to avoid exceptions
+                    System.IO.File.Delete(endLocationWithFile);
+                }
+
+                //Do the heavy moving
+                System.IO.File.Move(file.FullName, endLocationWithFile);
+
+                //System.Threading.Thread.Sleep(1000);
+                //FileInfo deliveredFile = new FileInfo(endLocationWithFile);
+
+                //if (Joshua.isFileInDirectory(endLocation, deliveredFile))
+                //{
+                //    Joshua.AddToDeliveredReport(deliveredFile);
+                //}
+
+                System.IO.FileInfo[] filesInDirectory = endLocation.GetFiles();
+                foreach (System.IO.FileInfo temp in filesInDirectory)
+                {
+                    if (temp.Name == shortFileName)
+                    {
+
+                        return "Moved Successfully";
+                    }
+                }
+
                 // The file we sent over has not gotten to the correct directory....something went wrong!
                 throw new IOException("File did not reach destination");
 
@@ -178,9 +253,9 @@ namespace OverSeer
             }
         }
 
-        public static bool isMezzanine(FileInfo file)
+        public static bool isMezzanine(FileObjects file)
         {
-            if (file.Name.Contains("8000k") || file.Name.Contains("1080p"))
+            if (file.CurrentFileInfo.Name.Contains("8000k") || file.CurrentFileInfo.Name.Contains("1080p"))
             {
                 return true;
             }
@@ -190,30 +265,30 @@ namespace OverSeer
             }
         }
 
-        public static int getNumberOfFilesInProject(string projectName, FileInfo xmlFile)
+        public static int getNumberOfFilesInProject(ProjectObject project)
         {
-            int count = 0;
+            //int count = 0;
             // Find the watch folder
             try
             {
-                DirectoryInfo watchFolder = new DirectoryInfo(utility.getValueFromXML(xmlFile, "Watchfolder"));
+                //DirectoryInfo watchFolder = new DirectoryInfo(utility.getValueFromXML(xmlFile, "Watchfolder"));
                 // Count all of the files in the watch folder with the right project name
-                string[] keyWords = utility.getValueFromXML(xmlFile, "Keyword").Split(',');
+                //string[] keyWords = utility.getValueFromXML(xmlFile, "Keyword").Split(',');
                 List<string> projectFiles = new List<string>();
 
-                foreach (FileInfo file in watchFolder.GetFiles())
+                foreach (FileInfo file in project.Watchfolder.GetFiles()) //TODO: do we need to check for access violations?
                 {
-                    foreach (string key in keyWords)
+                    foreach (string key in project.Keywords)
                     {
                         if (file.Name.Contains(key))
                         {
                             projectFiles.Add(file.Name);
-                            count++;
-                            break;
+                            //count++;
+                            //break;
                         }
                     }
                 }
-                return count;
+                return projectFiles.Count;
             }
             catch (Exception e)
             {

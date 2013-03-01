@@ -30,8 +30,14 @@ namespace OverSeer
         private string selectedType;
         public bool canClose;
 
+        private List<FileObjects> fileObjects = new List<FileObjects>();
+        private List<ProjectObject> projectObjects = new List<ProjectObject>();
+
         public StatusReporter()
         {
+            fileObjects = MainWindow.CurrentFileObjects;
+            projectObjects = MainWindow.CurrentProjectObjects;
+
             this.service = new SpreadsheetsService("Seeker");
             this.service.setUserCredentials(username, password);
 
@@ -84,10 +90,10 @@ namespace OverSeer
             }
         }
 
-        public void addFilesQueue(List<FileInfo> fileNames, string projectName)
+        public void addFilesQueue(ProjectObject project)
         {
             // get worksheet by projectName
-            WorksheetEntry worksheet = this.getWorksheetByProjectName(projectName);
+            WorksheetEntry worksheet = this.getWorksheetByProjectName(project);
 
             // Clear Queue Column
             CellFeed queueColumn = createCellFeedFromQuery(1, 1, 2, -1, worksheet);
@@ -95,18 +101,18 @@ namespace OverSeer
 
             //this.quickAdditions(worksheet, "queue", fileNames);
 
-            foreach (FileInfo file in fileNames)
+            foreach (FileObjects file in project.currentFileObjects)
             {
-                this.InsertRow(worksheet, file.Name, "Queue");
+                this.InsertRow(worksheet, file.CurrentFileInfo.Name, "Queue");
             }
             
         }
 
-        public WorksheetEntry getWorksheetByProjectName(string projectName)
+        public WorksheetEntry getWorksheetByProjectName(ProjectObject project)
         {
             foreach (WorksheetEntry worksheet in this.ReportSpreadSheet.Worksheets.Entries)
             {
-                if(worksheet.Title.Text.Equals(projectName))
+                if(worksheet.Title.Text.Equals(project.ProjectName))
                 {
                     return worksheet;
                 }
@@ -114,12 +120,13 @@ namespace OverSeer
 
             // If we get here, we have to create a new sheet because we do not already have one. 
 
-            return this.addWorkSheet(projectName);
+            return this.addWorkSheet(project.ProjectName);
         }
-        public void addResult(int column, string fileName, string project, string result)
+
+        public void addResult(int column, FileObjects file)
         {
             // Which worksheet are we working on?
-            WorksheetEntry worksheet = getWorksheetByProjectName(project);
+            WorksheetEntry worksheet = getWorksheetByProjectName(file.Project);
             // Which column are we entering it into?
             CellFeed ColumnFeed = createCellFeedFromQuery(column, column, 2, -1, worksheet);
             string rowHeader;
@@ -136,17 +143,17 @@ namespace OverSeer
             else
             {
                 rowHeader = "Failed";
-                InsertIntoFirstEmptyRowFailOrCaution(column, worksheet, fileName, rowHeader, result, false);
-                tryToRemoveFromQueue(fileName, worksheet);
+                InsertIntoFirstEmptyRowFailOrCaution(column, worksheet, file.CurrentFileInfo.Name, rowHeader, file.QCReport, false);
+                tryToRemoveFromQueue(file.CurrentFileInfo.Name, worksheet);
                 return;
 
             }
 
-            
-            InsirtIntoFirstEmptyRow(column, worksheet, fileName, rowHeader);
+
+            InsirtIntoFirstEmptyRow(column, worksheet, file.CurrentFileInfo.Name, rowHeader);
 
             // Remove it from the queue if you can! 
-            tryToRemoveFromQueue(fileName,worksheet);
+            tryToRemoveFromQueue(file.CurrentFileInfo.Name, worksheet);
             
         }
 
@@ -154,52 +161,55 @@ namespace OverSeer
         {
             // Go to autoQCPassed
             DirectoryInfo passedFolder = new DirectoryInfo(@"\\cob-hds-1\compression\QC\autoQCPassed\");
-            DirectoryInfo projectFolder = new DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\projects");
-            List<FileInfo> passedFiles = utility.checkForSystemFiles(passedFolder.GetFiles().ToList<FileInfo>());
-            List<FileInfo> projects = utility.checkForSystemFiles(projectFolder.GetFiles().ToList<FileInfo>());
+            //DirectoryInfo projectFolder = new DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\projects");
+            //List<FileInfo> passedFiles = utility.checkForSystemFiles(passedFolder.GetFiles().ToList<FileInfo>());
+            //<FileInfo> projects = utility.checkForSystemFiles(projectFolder.GetFiles().ToList<FileInfo>());
 
-            foreach (FileInfo project in projects)
+            foreach (ProjectObject project in projectObjects)
             {
-                if (project.Name.Contains("Jeremiah"))
+                if (project.ProjectName.Contains("Jeremiah"))
                 {
                    // continue;
                 }
-                List<FileInfo> fileNames = new List<FileInfo>();
+                //List<FileInfo> fileNames = new List<FileInfo>();
 
-                string[] keyWords = null;
+                //string[] keyWords = null;
 
                 
-                foreach (FileInfo tempProject in projects)
-                {
-                    string tempName = utility.getValueFromXML(tempProject, "Name");
+                //foreach (FileInfo tempProject in projects)
+                //{
+                //    string tempName = utility.getValueFromXML(tempProject, "Name");
 
 
-                    if (tempName == System.IO.Path.GetFileNameWithoutExtension(project.Name))
-                    {
-                        keyWords = utility.getValueFromXML(tempProject, "Keyword").Split(',');
-                        break;
-                    }
-                }
+                //    if (tempName == System.IO.Path.GetFileNameWithoutExtension(project.Name))
+                //    {
+                //        keyWords = utility.getValueFromXML(tempProject, "Keyword").Split(',');
+                //        break;
+                //    }
+                //}
 
-                if (keyWords == null)
-                {
-                    continue;
-                }
-                foreach (FileInfo file in passedFiles)
-                {
-                    foreach (string keyword in keyWords)
-                    {
-                        if (file.Name.Contains(keyword))
-                        {
-                            fileNames.Add(file);
-                            break;
-                        }
-                    }
-                }
+                //if (project.Keywords.Count == 0)
+                //{
+                //    continue;
+                //}
+                //foreach (FileObjects file in fileObjects)
+                //{
+                //    if (file.CurrentQCStatus == QCStatus.Passed)
+                //    {
+                //        foreach (string keyword in project.Keywords)
+                //        {
+                //            if (file.CurrentFileInfo.Name.Contains(keyword))
+                //            {
+                //                fileNames.Add(file);
+                //                break;
+                //            }
+                //        }
+                //    }
+                //}
 
-                if (fileNames.Count > 0)
+                if (project.currentFileObjects.Count > 0)
                 {
-                    this.addFilesQueue(fileNames, System.IO.Path.GetFileNameWithoutExtension(project.Name));
+                    this.addFilesQueue(project);
                 }
             }
         }
@@ -219,7 +229,7 @@ namespace OverSeer
             }
         }
 
-        public void addFail(string fileName, string reason)
+        public void addFail(FileObjects file)
         {
             WorksheetEntry workSheet = (WorksheetEntry)this.failSheet.Worksheets.Entries[0];
 
@@ -227,8 +237,8 @@ namespace OverSeer
             ListQuery listQuery = new ListQuery(listFeedLink.HRef.ToString());
             ListFeed listFeed = service.Query(listQuery);
             ListEntry row = new ListEntry();
-            row.Elements.Add(new ListEntry.Custom() { LocalName = "filename", Value = fileName });
-            row.Elements.Add(new ListEntry.Custom() { LocalName = "reasonforfail", Value = reason });
+            row.Elements.Add(new ListEntry.Custom() { LocalName = "filename", Value = file.CurrentFileInfo.Name });
+            row.Elements.Add(new ListEntry.Custom() { LocalName = "reasonforfail", Value = file.QCReport });
             row.Elements.Add(new ListEntry.Custom() { LocalName = "date", Value = DateTime.Today.ToString() });
             service.Insert(listFeed, row);
 
@@ -338,7 +348,7 @@ namespace OverSeer
             service.Insert(listFeed, row);
         }
 
-        public void InsertIntoFirstEmptyRowFailOrCaution(int column,WorksheetEntry workSheet, String content, String columnName, String report, bool caution)
+        public void InsertIntoFirstEmptyRowFailOrCaution(int column, WorksheetEntry workSheet, String content, String columnName, string report, bool caution)
         {
             // Start going through 
             CellQuery query = new CellQuery(workSheet.CellFeedLink);

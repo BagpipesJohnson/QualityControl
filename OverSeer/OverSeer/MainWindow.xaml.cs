@@ -25,7 +25,7 @@ namespace OverSeer
     /// </summary>
     public partial class MainWindow : Window
     {
-        public List<FileObjects> CurrentFileObjects { get; set; }
+        public static List<FileObjects> CurrentFileObjects { get; set; }
         static public List<ProjectObject> CurrentProjectObjects { get; set; }
         static public Dictionary<string, ProjectObject> CurrentProjectObjectsDict { get; set; }
         public DirectoryInfo ProjectFolder { get; set; }
@@ -99,17 +99,18 @@ namespace OverSeer
 
         private void rectify()
         {
-            System.IO.DirectoryInfo watchFolder = new System.IO.DirectoryInfo(@"\\cob-hds-1\compression\QC\");
+            System.IO.DirectoryInfo rectifyWatchFolder = new System.IO.DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\");
             System.IO.DirectoryInfo xmlDirectory = new System.IO.DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\OverSeerGeneratedxmls\");
-            
-            rectifier r = new rectifier(watchFolder);
 
-            List<System.IO.FileInfo> filesToRectify = utility.checkForSystemFiles(r.getDirectoryFiles(watchFolder));
+            rectifier r = new rectifier(rectifyWatchFolder);
 
-            r.createXMLs(filesToRectify, xmlDirectory);
+            List<System.IO.FileInfo> filesToRectify = utility.checkForSystemFiles(r.getDirectoryFiles(rectifyWatchFolder));
+
+            //r.createXMLs(filesToRectify, xmlDirectory);
             CurrentFileObjects = r.createFileObjects(filesToRectify, xmlDirectory);
 
         }
+
         private void BeginQCButton_Click(object sender, RoutedEventArgs e)
         {
             AdjudicatorWindow QCWindow = new AdjudicatorWindow();
@@ -239,7 +240,21 @@ namespace OverSeer
             //convert to dictionary entries
             foreach (var project in CurrentProjectObjects)
             {
-                CurrentProjectObjectsDict.Add(project.ProjectName, project);
+                bool alreadyExists = false;
+
+                //if key already exists, skip it
+                foreach (var entry in CurrentProjectObjectsDict)
+                {
+                    if (entry.Key == project.ProjectName)
+                    {
+                        alreadyExists = true;
+                    }
+                }
+
+                if (!alreadyExists)
+                {
+                    CurrentProjectObjectsDict.Add(project.ProjectName, project);
+                }
             }
         }
     }

@@ -134,7 +134,7 @@ namespace OverSeer
 
         }
 
-        public static void openGlobalLog(string project)
+        public static void openGlobalLog(ProjectObject project)
         {
             //TODO: only display the non-temp logs so the user doesn't open those by mistake
             //TODO: check to see if the log temp log is already open.  If so, recursively rename it.

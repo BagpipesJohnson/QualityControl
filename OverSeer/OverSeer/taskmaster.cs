@@ -68,7 +68,7 @@ namespace OverSeer
             }
         }
 
-        public static bool moveAfterAutoQCPass(System.IO.FileInfo file)
+        public static bool moveAfterAutoQCPass(FileObjects file)
         {
             System.IO.DirectoryInfo targetDirectory = new System.IO.DirectoryInfo(@"\\cob-hds-1\compression\QC\autoQCPassed\");
 
@@ -79,6 +79,7 @@ namespace OverSeer
             else
                 return false;
         }
+
         public static bool moveAfterAutoQCFail(System.IO.FileInfo file)
         {
             System.IO.DirectoryInfo targetDirectory = new System.IO.DirectoryInfo(@"\\cob-hds-1\compression\QC\autoQCFailed\");

@@ -37,32 +37,32 @@ namespace OverSeer
             this.TextBox_FailedDirectory.Text = project.FailFolder.FullName;
             this.TextBox_WatchFolder.Text = project.Watchfolder.FullName;
             this.TextBox_ProjectName.Text = project.ProjectName;
-            this.TextBox_Keywords.Text = project.Keywords.ToArray<string>().ToString();
+            this.TextBox_Keywords.Text = string.Join(",", project.Keywords);//project.Keywords;
         }
 
-        public ProjectInfoWindow(string projectname, 
-                                 string webPassDir, 
-                                 string mezPasDir, 
-                                 string failDir, 
-                                 string SDnum, 
-                                 string watchFolder, 
-                                 string keywords, 
-                                 Adjudicator adjudicator)
-        {
-            currentProject = projectname;
-            this.adjudicator = adjudicator;
-            this.adjudicator.changeProject(utility.getProjectFileFromString(currentProject).FullName);
+        //public ProjectInfoWindow(string projectname, 
+        //                         string webPassDir, 
+        //                         string mezPasDir, 
+        //                         string failDir, 
+        //                         string SDnum, 
+        //                         string watchFolder, 
+        //                         string keywords, 
+        //                         Adjudicator adjudicator)
+        //{
+        //    currentProject = projectname;
+        //    this.adjudicator = adjudicator;
+        //    this.adjudicator.changeProject(utility.getProjectFileFromString(currentProject).FullName);
             
-            InitializeComponent();
+        //    InitializeComponent();
             
-            this.TextBox_MezzaninePassFolder.Text = mezPasDir;
-            this.TextBox_SDNumber.Text = SDnum;
-            this.TextBox_WebPassFolder.Text = webPassDir;
-            this.TextBox_FailedDirectory.Text = failDir;
-            this.TextBox_WatchFolder.Text = watchFolder;
-            this.TextBox_ProjectName.Text = projectname;
-            this.TextBox_Keywords.Text = keywords;
-        }
+        //    this.TextBox_MezzaninePassFolder.Text = mezPasDir;
+        //    this.TextBox_SDNumber.Text = SDnum;
+        //    this.TextBox_WebPassFolder.Text = webPassDir;
+        //    this.TextBox_FailedDirectory.Text = failDir;
+        //    this.TextBox_WatchFolder.Text = watchFolder;
+        //    this.TextBox_ProjectName.Text = projectname;
+        //    this.TextBox_Keywords.Text = keywords;
+        //}
 
         private void TextBox_WatchFolder_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -73,37 +73,39 @@ namespace OverSeer
         private void TextBox_Keywords_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("Keyword", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_Keywords.Text;
+            foreach (var keyword in TextBox_Keywords.Text.Split(','))
+            {
+                this.adjudicator.Keywords.Add(keyword);                
+            }
         }
         
         private void TextBox_ProjectName_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("Name", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_ProjectName.Text;
         }
 
         private void TextBox_MezzaninePassFolder_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("MezzaninePassFolder", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_MezzaninePassFolder.Text;
+            this.adjudicator.MezzaninePassFolder = new DirectoryInfo(TextBox_MezzaninePassFolder.Text);
         }
 
         private void TextBox_WebPassFolder_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("WebPassFolder", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_WebPassFolder.Text;
+            this.adjudicator.WebPassFolder = new DirectoryInfo(TextBox_WebPassFolder.Text);
         }
 
         private void TextBox_FailedDirectory_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("FailFolder", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_FailedDirectory.Text;
+            this.adjudicator.FailFolder = new DirectoryInfo(TextBox_FailedDirectory.Text);
         }
 
         private void TextBox_SDNumber_TextChanged(object sender, TextChangedEventArgs e)
         {
             writeTextBoxToXML("SDNumber", (TextBox)sender);
-            this.adjudicator.keywords = TextBox_SDNumber.Text;
+            this.adjudicator.currentSDNumber = TextBox_SDNumber.Text;
         }
 
         /// <summary>

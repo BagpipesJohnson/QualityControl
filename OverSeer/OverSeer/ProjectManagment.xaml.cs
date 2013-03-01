@@ -68,7 +68,7 @@ namespace OverSeer
         private void openProject(ProjectObject project)
         {
             ProjectInfoWindow projectInfo = new ProjectInfoWindow(project);
-            projectInfo.ShowDialog();
+            projectInfo.Show();
         }
     }
 }

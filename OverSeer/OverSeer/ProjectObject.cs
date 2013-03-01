@@ -23,17 +23,20 @@ namespace OverSeer
         public List<string> Keywords { get; set; }
         public List<string> KeywordExclusions { get; set; }
         public List<MailAddress> Emails { get; set; }
+        public List<FileObjects> currentFileObjects { get; set; }
 
         //constructor
         public ProjectObject(FileInfo xml)
         {
             Keywords = new List<string>();
             Emails = new List<MailAddress>();
+            currentFileObjects = new List<FileObjects>();
 
             XML = XDocument.Load(xml.FullName);
 
             //serialize the project xml
             UpdateProjectObjectFromXML(XML);
+            
         }
 
         /// <summary>
@@ -157,6 +160,34 @@ namespace OverSeer
             //update revision info
             //update xml with changed ProjectObject information
             return false;
+        }
+
+        public void UpdateCurrentFileObjects()
+        {
+            //search through all filesObjects
+            foreach (var file in MainWindow.CurrentFileObjects)
+            {
+                //find all fileObjects for this project by keyword
+                foreach (var keyword in this.Keywords)
+                {
+                    if (file.CurrentFileInfo.Name.Contains(keyword))
+                    {
+                        //exclude bad hits by keyword exlusions
+                        foreach (var badKeyword in this.KeywordExclusions)
+                        {
+                            if (file.CurrentFileInfo.Name.Contains(badKeyword))
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                this.currentFileObjects.Add(file);
+                                file.Project = this;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 }

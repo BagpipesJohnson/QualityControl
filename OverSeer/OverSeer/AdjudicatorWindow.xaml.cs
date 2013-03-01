@@ -31,13 +31,13 @@ namespace OverSeer
         public DirectoryInfo xmlDirectory = new DirectoryInfo(@"\\cob-hds-1\compression\QC\QCing\otherFiles\OverSeerGeneratedxmls\");
         public string currentUser;
         public string currentUserInitials;
-        public FileInfo currentFile;
-        public string currentProject;
+        public FileObjects currentFile;
+        public ProjectObject currentProject;
         public DirectoryInfo currentUserFolder;
         private Adjudicator adjudicator;
         public Dictionary<string, DirectoryInfo> userDirectoryDictionary;
         public Dictionary<string, string> userInitialsDictionary;
-        public List<string> projectsReadyToQC = new List<string>();
+        public List<ProjectObject> projectsReadyToQC = new List<ProjectObject>();
         public string currentReport;
         public Process currentMovie;
 
@@ -50,6 +50,9 @@ namespace OverSeer
         public AdjudicatorWindow()
         {
             InitializeComponent();
+
+            //populate project Combobox with currently available ProjectObjects
+            ComboBox_Project.DataContext = MainWindow.CurrentProjectObjectsDict.Keys;
 
             //add all qc keywords to an array
             qc_keywords.Add(CheckBox_SyncIssues);
@@ -99,28 +102,36 @@ namespace OverSeer
 
         private void populateProjects()
         {
-            List<FileInfo> xmls = utility.checkForSystemFiles(this.projectDirectory.GetFiles().ToList<FileInfo>());
+            //List<FileInfo> xmls = utility.checkForSystemFiles(this.projectDirectory.GetFiles().ToList<FileInfo>());
 
-            
-            foreach (FileInfo file in xmls)
+            //look through each project and see if files exist in that project
+            foreach (var project in MainWindow.CurrentProjectObjects)
             {
-                // Now to only add the projects that have a file!!!
-
-                string tempProject = utility.getValueFromXML(file, "Name");
-
-
-
-                int filesInProject = utility.getNumberOfFilesInProject(tempProject, file);
-
-
-                if (!this.ComboBox_Project.Items.Contains(tempProject) && tempProject != "NA" && filesInProject != 0)
+                if (project.currentFileObjects.Count > 0)
                 {
-                    this.ComboBox_Project.Items.Add(tempProject);
-                    projectsReadyToQC.Add(tempProject);
-                    continue;
-                    //this.ProjectComboBox.Items.Add(tempProject);
+                    projectsReadyToQC.Add(project);
                 }
             }
+
+            //foreach (FileInfo file in xmls)
+            //{
+            //    // Now to only add the projects that have a file!!!
+
+            //    string tempProject = utility.getValueFromXML(file, "Name");
+
+
+
+            //    int filesInProject = utility.getNumberOfFilesInProject(tempProject);
+
+
+            //    if (!this.ComboBox_Project.Items.Contains(tempProject) && tempProject != "NA" && filesInProject != 0)
+            //    {
+            //        this.ComboBox_Project.Items.Add(tempProject);
+            //        projectsReadyToQC.Add(tempProject);
+            //        continue;
+            //        //this.ProjectComboBox.Items.Add(tempProject);
+            //    }
+            //}
 
             ComboBox_Project.DataContext = projectsReadyToQC.Distinct();
         }
@@ -202,7 +213,7 @@ namespace OverSeer
             this.adjudicator.ClearUserFolder(this.currentUserFolder);
 
             // Change current project
-            this.currentProject = ComboBox_Project.SelectedItem.ToString();
+            this.currentProject = MainWindow.CurrentProjectObjectsDict[ComboBox_Project.SelectedItem.ToString()];
 
             this.adjudicator.changeProject(this.currentProject);
 
@@ -216,7 +227,7 @@ namespace OverSeer
         {
             if (this.currentProject != null)
             {
-                int numberOfFiles = utility.getNumberOfFilesInProject(this.currentProject, utility.getProjectFileFromString(this.currentProject));
+                int numberOfFiles = utility.getNumberOfFilesInProject(this.currentProject);
                 this.Label_ProjectFileCount.Content = numberOfFiles.ToString();
             }
         }
@@ -226,7 +237,7 @@ namespace OverSeer
             // Play the current file
             if (this.currentFile != null)
             {
-                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.FullName);
+                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.CurrentFileInfo.FullName);
 
                 this.currentMovie = movie;
             }
@@ -279,7 +290,8 @@ namespace OverSeer
                 utility.addFileAndTimeToUser(since.Seconds, "QC");
                 utility.addOneToPassFailCaution("Passed", this.currentUser);
                 utility.addOneToPassFailCaution("Passed", "QC");
-               this.adjudicator.ProcessFile(this.currentFile, "Passed", "", this.currentUser, this.currentUserInitials, this.currentProject);
+                //this.adjudicator.ProcessFile(this.currentFile, "Passed", "", this.currentUser, this.currentUserInitials, this.currentProject);
+                this.adjudicator.ProcessFile(this.currentFile, this.currentUser, this.currentUserInitials, this.currentProject);
             };
 
 
@@ -290,7 +302,7 @@ namespace OverSeer
 
             if (this.currentFile != null)
             {
-                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.FullName);
+                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.CurrentFileInfo.FullName);
 
                 this.currentMovie = movie;
             }
@@ -328,7 +340,7 @@ namespace OverSeer
                 return;
             }
             this.enableButtons();
-            this.FileName.Content = this.currentFile.Name;
+            this.FileName.Content = this.currentFile.CurrentFileInfo.Name;
 
             this.UpdateLayout();
 
@@ -373,7 +385,7 @@ namespace OverSeer
                 utility.addFileAndTimeToUser(since.Seconds, "QC");
 
 
-                this.adjudicator.ProcessFile(this.currentFile, "WrongProject", "", this.currentUser, this.currentUserInitials, this.currentProject);
+                this.adjudicator.ProcessFile(this.currentFile, this.currentUser, this.currentUserInitials, this.currentProject);
             };
             worker.RunWorkerAsync();
 
@@ -383,7 +395,7 @@ namespace OverSeer
             updateFileCount();
             if (this.currentFile != null)
             {
-                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.FullName);
+                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.CurrentFileInfo.FullName);
 
                 this.currentMovie = movie;
             }
@@ -439,7 +451,7 @@ namespace OverSeer
                 utility.addOneToPassFailCaution("Cautioned", this.currentUser);
                 utility.addOneToPassFailCaution("Cautioned", "QC");
 
-                this.adjudicator.ProcessFile(this.currentFile, "Cautioned", checks + " " + this.currentReport, this.currentUser, this.currentUserInitials, this.currentProject);
+                this.adjudicator.ProcessFile(this.currentFile, this.currentUser, this.currentUserInitials, this.currentProject);
             };
             worker.RunWorkerAsync();
 
@@ -448,7 +460,7 @@ namespace OverSeer
 
             if (this.currentFile != null)
             {
-                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.FullName);
+                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.CurrentFileInfo.FullName);
 
                 this.currentMovie = movie;
             }
@@ -520,13 +532,7 @@ namespace OverSeer
             // Get the six strings that we need in order to create the new window.
             if (this.adjudicator != null && this.currentProject != null)
             {
-                ProjectInfoWindow w = new ProjectInfoWindow(this.currentProject, 
-                                                            this.adjudicator.WebPassedDirectory.FullName, 
-                                                            this.adjudicator.MezzaninePassedDirectory.FullName, 
-                                                            this.adjudicator.failedDirectory.FullName, 
-                                                            this.adjudicator.currentSDNumber, 
-                                                            this.adjudicator.watchFolder.FullName, 
-                                                            this.adjudicator.keywords, this.adjudicator);
+                ProjectInfoWindow w = new ProjectInfoWindow(MainWindow.CurrentProjectObjectsDict[ComboBox_Project.SelectedItem.ToString()]);
                 w.Show();
             }
         }
@@ -617,7 +623,7 @@ namespace OverSeer
                 TimeSpan since = (DateTime.Now - this.currentFileTime);
                 utility.addFileAndTimeToUser(since.Seconds, this.currentUser);
                 utility.addFileAndTimeToUser(since.Seconds, "QC");
-                this.adjudicator.ProcessFile(this.currentFile, "Failed", checks + " " + this.currentReport, this.currentUser, this.currentUserInitials, this.currentProject);
+                this.adjudicator.ProcessFile(this.currentFile, this.currentUser, this.currentUserInitials, this.currentProject);
                 utility.addOneToPassFailCaution("Failed", this.currentUser);
                 utility.addOneToPassFailCaution("Failed", "QC");
                 
@@ -629,7 +635,7 @@ namespace OverSeer
 
             if (this.currentFile != null)
             {
-                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.FullName);
+                System.Diagnostics.Process movie = System.Diagnostics.Process.Start(this.currentFile.CurrentFileInfo.FullName);
 
                 this.currentMovie = movie;
             }
